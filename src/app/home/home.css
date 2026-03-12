@@ -1,0 +1,20 @@
+.toy-card {
+    width: 300px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.toy-card:hover {
+    transform: translateY(-4px);
+}
+
+.card-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.card-content {
+    margin-top: 10px;
+}

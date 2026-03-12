@@ -1,0 +1,54 @@
+@if(toy()){
+<div class="details-wrapper">
+    <mat-card class="details-card">
+        <img [src]="utils.getImageUrl(toy()!)" class="details-image">
+    </mat-card>
+    <mat-card class="details-card">
+        <mat-card-content>
+            <h1>{{toy()?.name}}</h1>
+            <mat-list>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <mat-icon matListItemIcon>info</mat-icon>
+                    <div matListItemTitle>{{(toy()?.description)}}</div>
+
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <mat-icon matListItemIcon>child_care</mat-icon>
+                    <div matListItemTitle>Uzrast: {{toy()?.ageGroup?.name}} godina</div>
+                    <div matListItemLine>{{toy()?.ageGroup?.description}}</div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    @if(toy()?.targetGroup == 'dečak'){
+                    <mat-icon matListItemIcon>man</mat-icon>
+                    }@else if (toy()?.targetGroup == 'devojčica') {
+                    <mat-icon matListItemIcon>woman</mat-icon>
+                    }@else {
+                    <mat-icon matListItemIcon>wc</mat-icon>
+                    }
+                    <div matListItemTitle>Pol: {{toy()?.targetGroup}}</div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <mat-icon matListItemIcon>category</mat-icon>
+                    <div matListItemTitle>Kategorija: {{toy()?.type?.name}}</div>
+                    <div matListItemLine>{{toy()?.type?.description}}</div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </mat-list>
+
+            <mat-card-subtitle class="detail-price">
+                <strong>Cena: {{ toy()?.price | number :'1.2-2' }} RSD</strong>
+            </mat-card-subtitle>
+        </mat-card-content>
+        <mat-card-actions>
+            <button matButton="elevated" >
+                Dodaj u korpu
+                <mat-icon>shopping_bag</mat-icon>
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+}

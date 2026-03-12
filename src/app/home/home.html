@@ -1,0 +1,24 @@
+@if (toys().length>0) {
+<div class="card-wrapper">
+    @for(t of toys(); track $index){
+    <mat-card [routerLink]="`/details/${t.permalink}`" class="toy-card" appearance="outlined">
+        <img mat-card-image [src]="utils.getImageUrl(t)" [alt]="t.name">
+        <mat-card-content class="card-content">
+
+            <mat-card-header>
+                <mat-card-title>
+                    <strong>{{t.name}}</strong>
+                </mat-card-title>
+                <mat-card-subtitle>{{t.price}} RSD</mat-card-subtitle>
+            </mat-card-header>
+            
+        </mat-card-content>
+        <mat-card-actions>
+            <a [routerLink]="`/details/${t.permalink}`" matButton>
+                <mat-icon fontIcon="description" />Details
+            </a>
+        </mat-card-actions>
+    </mat-card>
+    }
+</div>
+}

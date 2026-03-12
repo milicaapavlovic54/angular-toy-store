@@ -1,0 +1,27 @@
+.details-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.details-card{
+    width: 560px;
+}
+
+.details-image{
+    max-width: 100%;
+    border-radius: 12px;
+}
+
+.mat-mdc-list-item [matListItemIcon]{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.mat-mdc-card-content .detail-price{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 30px;
+}
