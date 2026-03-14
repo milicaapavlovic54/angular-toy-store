@@ -9,7 +9,7 @@
             <mat-list>
                 <mat-divider></mat-divider>
                 <mat-list-item>
-                    <mat-icon matListItemIcon>info</mat-icon>
+                    <mat-icon matListItemIcon>description</mat-icon>
                     <div matListItemTitle>{{(toy()?.description)}}</div>
 
                 </mat-list-item>
@@ -43,12 +43,15 @@
                 <strong>Cena: {{ toy()?.price | number :'1.2-2' }} RSD</strong>
             </mat-card-subtitle>
         </mat-card-content>
+        @if(authService.getActiveUser()){
         <mat-card-actions>
-            <button matButton="elevated" >
+            <button matButton="elevated">
                 Dodaj u korpu
                 <mat-icon>shopping_bag</mat-icon>
             </button>
         </mat-card-actions>
+        }
+
     </mat-card>
 </div>
 }

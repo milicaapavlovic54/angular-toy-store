@@ -3,7 +3,7 @@ export interface ToyModel{
     name: string
     permalink: string
     description: string
-    targetGroup: string
+    targetGroup: 'dečak' | 'devojčica' | 'svi'
     productionDate: string
     price: number
     imageUrl: string

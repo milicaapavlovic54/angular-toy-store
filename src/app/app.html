@@ -1,28 +1,28 @@
 <mat-toolbar color="primary">
     <mat-icon fontIcon="smart_toy" />
-    <span>ToyStore</span>
+    <span class="title">Mali Svet Igračaka</span>
     <span class="spacer"></span>
     
     <a routerLink="" matButton>
-        <mat-icon fontIcon="home" />Home
+        <mat-icon fontIcon="home" />Igračke
     </a>
     <a routerLink="/about" matButton>
-        <mat-icon fontIcon="info" />About
+        <mat-icon fontIcon="info" />O nama
     </a>
 
      @if(authService.getActiveUser()){
-    <a routerLink="/cart" matButton>
-        <mat-icon fontIcon="shopping_cart" />Cart
-    </a>
-    <a routerLink="/user" matButton>
-        <mat-icon fontIcon="account_circle" />Account
-    </a>
-    <button matButton (click)="doLogout()">
-        <mat-icon fontIcon="logout" /> Logout
-    </button>
+        <a routerLink="/cart" matButton>
+            <mat-icon fontIcon="shopping_cart" />Korpa
+        </a>
+        <a routerLink="/user" matButton>
+            <mat-icon fontIcon="account_circle" />Profil
+        </a>
+        <button matButton (click)="doLogout()">
+            <mat-icon fontIcon="logout" /> Odjavi se
+        </button>
     }@else {
     <a routerLink="/login" matButton>
-        <mat-icon fontIcon="login" />Login
+        <mat-icon fontIcon="login" />Prijavi se
     </a>
     } 
 

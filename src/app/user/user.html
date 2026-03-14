@@ -33,8 +33,8 @@
             </div>
         </mat-card-content>
         <mat-card-actions>
-            <button type="button" matButton="elevated" (click)="updateUser()">
-                <mat-icon fontIcon="save" /> Sačuvaj izmene
+            <button type="button" class="centered-button" matButton="elevated" (click)="updateUser()">
+                <mat-icon fontIcon="save" /> Sačuvaj promene
             </button>
         </mat-card-actions>
     </mat-card>
@@ -42,7 +42,7 @@
         <mat-card class="user-card user-details">
 
             <mat-card-header>
-                <h1>General Information</h1>
+                <h1>Profil korisnika</h1>
             </mat-card-header>
 
             <mat-card-content>
@@ -59,29 +59,29 @@
         <mat-card class="user-card">
 
             <mat-card-header>
-                <h1>Change Password</h1>
+                <h1>Promena lozinke</h1>
             </mat-card-header>
 
             <mat-card-content>
                 <div>
                     <mat-form-field class="full-width">
-                        <mat-label>Old Password</mat-label>
+                        <mat-label>Stara lozinka</mat-label>
                         <input matInput type="password" [(ngModel)]="oldPassword">
                     </mat-form-field>
                     <mat-form-field class="full-width">
-                        <mat-label>New Password</mat-label>
+                        <mat-label>Nova lozinka</mat-label>
                         <input matInput type="password" [(ngModel)]="newPassword">
                     </mat-form-field>
                     <mat-form-field class="full-width">
-                        <mat-label>Repeat Password</mat-label>
+                        <mat-label>Ponovljena lozinka</mat-label>
                         <input matInput type="password" [(ngModel)]="passRepeat">
                     </mat-form-field>
                 </div>
             </mat-card-content>
 
             <mat-card-actions>
-                <button type="button" matButton (click)="updatePassword()">
-                    <mat-icon fontIcon="password" /> Update Password
+                <button type="button" class="centered-button" matButton="elevated" (click)="updatePassword()">
+                    <mat-icon fontIcon="password" /> Sačuvaj lozinku
                 </button>
             </mat-card-actions>
 

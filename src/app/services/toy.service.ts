@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ToyModel } from "../models/toy.model";
 import { ToyTypeModel } from "../models/toyType.model";
+import { ToyAgeGroupModel } from "../models/toyAgeGroup.model";
 
 const client = axios.create({
     baseURL: 'https://toy.pequla.com/api',
@@ -29,7 +30,7 @@ export class ToyService{
     }
 
     static async getAgeGroups(){
-        return await client.get<ToyModel>('/age-group')
+        return await client.get<ToyAgeGroupModel[]>('/age-group')
     }
 
     static async getToyTypes(){

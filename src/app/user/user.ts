@@ -49,37 +49,37 @@ export class User {
   }
 
   updateUser() {
-    Alerts.confirm('Are you sure you want ot update user info?', () => {
+    Alerts.confirm('Da li ste sigurni da želite da izmenite korisničke podatke?', () => {
       AuthService.updateActiveUser(this.activeUser!)
-      Alerts.success('User updated successfuly!')
+      Alerts.success('Korisnički podaci su uspešno promenjeni!')
     })
 
   }
 
   updatePassword() {
-    Alerts.confirm('Are you sure you want ot change password?', () => {
+    Alerts.confirm('Da li ste sigurni da želite da promenite lozinku?', () => {
       if (this.oldPassword != this.activeUser?.password) {
-        Alerts.error('Invalid old password')
+        Alerts.error('Netačna stara lozinka')
         return
       }
 
       if (this.newPassword.length < 6) {
-        Alerts.error('Password must be at least 6 characters long')
+        Alerts.error('Lozinka mora imati minimum 6 karaktera')
         return
       }
 
       if (this.newPassword != this.passRepeat) {
-        Alerts.error('Password doesn\'t match')
+        Alerts.error('Lozinke se ne poklapaju')
         return
       }
 
       if (this.newPassword == this.oldPassword) {
-        Alerts.error('New password can\'t be the same as the old one')
+        Alerts.error('Nova lozinka ne može biti ista kao stara')
         return
       }
 
       AuthService.updateActiveUserPassword(this.newPassword)
-      Alerts.success('Password updated successfuly')
+      Alerts.success('Lozinka uspešno promenjena')
       AuthService.logout()
       this.router.navigate(['/login'])
     })

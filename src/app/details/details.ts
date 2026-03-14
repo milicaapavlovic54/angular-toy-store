@@ -8,6 +8,7 @@ import { Utils } from '../utils';
 import { ToyService } from '../services/toy.service';
 import { ActivatedRoute } from '@angular/router';
 import { DecimalPipe } from '@angular/common';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-details',
@@ -24,7 +25,9 @@ import { DecimalPipe } from '@angular/common';
 })
 export class Details {
   toy = signal<ToyModel | null>(null)
+  public authService = AuthService
   constructor(route: ActivatedRoute, public utils: Utils) {
+    
     route.params.subscribe(params => {
       const permalink = params['permalink']
       ToyService.getToyByPermalink(permalink)

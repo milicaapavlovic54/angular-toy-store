@@ -4,11 +4,15 @@
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
+mat-drawer-container {
+  min-height: 100vh;
+}
+
 .toy-card:hover {
     transform: translateY(-4px);
 }
 
-.card-wrapper {
+.mat-drawer-content {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -17,4 +21,38 @@
 
 .card-content {
     margin-top: 10px;
+}
+
+.empty-card {
+  padding: 24px;
+
+}
+
+.side-filters{
+    min-height: 100vh;
+    border-right: 1px solid #555;
+    border-radius: 0px;
+    padding: 10px;
+
+}
+
+.side-filters mat-form-field {
+    width: 100%;
+}
+
+.type-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.divider{
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.side-filters mat-expansion-panel {
+  box-shadow: none;
+  border-radius: 0;
+  background: transparent;
 }

@@ -21,9 +21,18 @@
 }
 
 .user-img {
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 60px;
+    height: 60px;
     border-radius: 30px;
 }
 
 .user-info-wrapper{
     width: 60%;
+}
+
+.centered-button{
+    margin-left: auto;
+    margin-right: auto;
 }

@@ -1,24 +1,135 @@
-@if (toys().length>0) {
-<div class="card-wrapper">
-    @for(t of toys(); track $index){
-    <mat-card [routerLink]="`/details/${t.permalink}`" class="toy-card" appearance="outlined">
-        <img mat-card-image [src]="utils.getImageUrl(t)" [alt]="t.name">
-        <mat-card-content class="card-content">
+<mat-drawer-container>
+    <mat-drawer mode="side" opened class="side-filters">
+        <h2>Filteri i sortiranje</h2>
+        <mat-form-field>
+            <mat-label>Pretraga</mat-label>
+            <input matInput type="text" [(ngModel)]="search" (keyup)="filter()">
+        </mat-form-field>
 
-            <mat-card-header>
-                <mat-card-title>
-                    <strong>{{t.name}}</strong>
-                </mat-card-title>
-                <mat-card-subtitle>{{t.price}} RSD</mat-card-subtitle>
-            </mat-card-header>
-            
-        </mat-card-content>
-        <mat-card-actions>
-            <a [routerLink]="`/details/${t.permalink}`" matButton>
-                <mat-icon fontIcon="description" />Details
-            </a>
-        </mat-card-actions>
-    </mat-card>
-    }
-</div>
-}
+        <mat-divider class="divider"></mat-divider>
+
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Tipovi igračaka
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ul class="type-list">
+                    @for (type of getVisibleItems(toyTypeFilter); track type.id) {
+                    <li>
+                        <mat-checkbox [checked]="isSelected(toyTypeFilter, type.id)"
+                            (change)="onChange(toyTypeFilter, type.id, $event.checked)" >
+                            {{ type.name }}
+                        </mat-checkbox>
+                    </li>
+                    }
+                </ul>
+                @if(toyTypeFilter.items.length>5){
+                    <button matButton type="button" (click)="toggleShowAll(toyTypeFilter)">
+                        {{toyTypeFilter.showAll ? 'Prikažite manje' : 'Prikažite više' }}
+                    </button>
+                }
+
+            </mat-expansion-panel>
+
+            <mat-divider class="divider"></mat-divider>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Uzrast
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ul class="type-list">
+                    @for (ag of getVisibleItems(ageGroupFilter); track ag.id) {
+                    <li>
+                        <mat-checkbox [checked]="isSelected(ageGroupFilter, ag.id)"
+                            (change)="onChange(ageGroupFilter, ag.id, $event.checked)" >
+                            {{ ag.name }}
+                        </mat-checkbox>
+                    </li>
+                    }
+                </ul>
+                @if(ageGroupFilter.items.length>5){
+                    <button matButton type="button" (click)="toggleShowAll(ageGroupFilter)">
+                        {{ageGroupFilter.showAll ? 'Prikažite manje' : 'Prikažite više' }}
+                    </button>
+                }
+
+            </mat-expansion-panel>
+
+            <mat-divider class="divider"></mat-divider>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Pol
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ul class="type-list">
+                    @for (tg of getVisibleItems(targetGroupFilter); track tg.id) {
+                    <li>
+                        <mat-checkbox [checked]="isSelected(targetGroupFilter, tg.id)"
+                            (change)="onChange(targetGroupFilter, tg.id, $event.checked)" >
+                            {{ tg.name }}
+                        </mat-checkbox>
+                    </li>
+                    }
+                </ul>
+                @if(targetGroupFilter.items.length>5){
+                    <button matButton type="button" (click)="toggleShowAll(targetGroupFilter)">
+                        {{targetGroupFilter.showAll ? 'Prikažite manje' : 'Prikažite više' }}
+                    </button>
+                }
+
+            </mat-expansion-panel>
+
+            <mat-divider class="divider"></mat-divider>
+
+
+        </mat-accordion>
+
+        
+
+        
+
+
+
+    </mat-drawer>
+
+    <mat-drawer-content>
+        @if (filteredToys().length>0) {
+
+        @for(t of filteredToys(); track $index){
+
+        <mat-card [routerLink]="`/details/${t.permalink}`" class="toy-card" appearance="outlined">
+            <img mat-card-image [src]="utils.getImageUrl(t)" [alt]="t.name">
+            <mat-card-content class="card-content">
+
+                <mat-card-header>
+                    <mat-card-title>
+                        <strong>{{t.name}}</strong>
+                    </mat-card-title>
+                    <mat-card-subtitle>{{t.price}} RSD</mat-card-subtitle>
+                </mat-card-header>
+
+            </mat-card-content>
+            <mat-card-actions>
+                <a [routerLink]="`/details/${t.permalink}`" matButton>
+                    <mat-icon fontIcon="description" />Details
+                </a>
+            </mat-card-actions>
+        </mat-card>
+        }
+        }@else {
+        <mat-card class="empty-card">
+            <mat-card-content>
+                <h3>Nema traženih igračaka</h3>
+            </mat-card-content>
+
+        </mat-card>
+        }
+    </mat-drawer-content>
+
+</mat-drawer-container>
