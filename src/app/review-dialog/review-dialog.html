@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>
+  {{ data.rating ? 'Izmenite ocenu' : 'Ocenite proizvod' }}
+</h2>
+
+<mat-dialog-content>
+  <div class="dialog-content">
+    <img [src]="data.imageUrl" [alt]="data.toyName" class="review-img">
+    <p class="toy-name">{{ data.toyName }}</p>
+
+    <div class="stars-wrapper">
+      @for(star of stars; track star){
+      <button type="button" class="star-btn" (click)="setRating(star)">
+        @if(star <= rating){ 
+          <mat-icon class="material-symbols-filled">star</mat-icon>
+        } @else {
+          <mat-icon class="material-symbols-outlined">star_outline</mat-icon>
+        }
+
+      </button>
+      }
+    </div>
+
+    <mat-form-field class="full-width">
+      <mat-label>Komentar</mat-label>
+      <textarea matInput rows="4" [(ngModel)]="comment"></textarea>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="close()">Otkaži</button>
+  <button matButton="filled" type="button" (click)="save()" [disabled]="!rating">
+    Sačuvaj
+  </button>
+</mat-dialog-actions>

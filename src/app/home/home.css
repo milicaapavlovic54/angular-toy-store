@@ -1,5 +1,5 @@
 .toy-card {
-    width: 300px;
+    width: 330px;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -28,12 +28,19 @@ mat-drawer-container {
 
 }
 
-.side-filters{
-    min-height: 100vh;
-    border-right: 1px solid #555;
-    border-radius: 0px;
-    padding: 10px;
+.side-filters {
+  width: 320px;
+  border-right: 1px solid #555;
+  border-radius: 0;
+  padding: 0;
+}
 
+.side-filters-inner {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 10px;
 }
 
 .side-filters mat-form-field {
@@ -55,4 +62,12 @@ mat-drawer-container {
   box-shadow: none;
   border-radius: 0;
   background: transparent;
+}
+.toy-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  color: goldenrod;
+  font-weight: 500;
 }

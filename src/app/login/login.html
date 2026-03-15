@@ -10,12 +10,15 @@
             </mat-form-field>
             <mat-form-field class="full-width">
                 <mat-label>Password</mat-label>
-                <input matInput type="password" [(ngModel)]="password" >
+                <input matInput type="password" [(ngModel)]="password">
             </mat-form-field>
-            <mat-card-actions >
+            <mat-card-actions>
                 <button type="button" matButton class="full-width" (click)="doLogin()">
-                   <mat-icon fontIcon="login"/> Submit
+                    <mat-icon fontIcon="login" /> Submit
                 </button>
+                <a routerLink="/signup" matButton>
+                    <mat-icon fontIcon="send" /> Signup Instead
+                </a>
             </mat-card-actions>
         </div>
     </mat-card-content>

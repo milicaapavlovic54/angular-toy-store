@@ -5,7 +5,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
+import { Router, RouterLink} from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { Alerts } from '../alerts';
 
@@ -17,7 +17,8 @@ import { Alerts } from '../alerts';
     MatFormFieldModule,
     MatButtonModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './login.html',
   styleUrl: './login.css',

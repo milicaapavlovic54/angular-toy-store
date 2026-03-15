@@ -1,9 +1,26 @@
 <mat-drawer-container>
     <mat-drawer mode="side" opened class="side-filters">
-        <h2>Filteri i sortiranje</h2>
+        <div class="side-filters-inner">
+            <h2>Filteri i sortiranje</h2>
         <mat-form-field>
             <mat-label>Pretraga</mat-label>
             <input matInput type="text" [(ngModel)]="search" (keyup)="filter()">
+        </mat-form-field>
+
+        <mat-divider class="divider"></mat-divider>
+        
+        <mat-form-field>
+            <mat-label>Sortiranje</mat-label>
+            <mat-select [(ngModel)]="sortBy" (selectionChange)="filter()">
+                <mat-option value="date_desc">Najnoviji prvo</mat-option>
+                <mat-option value="date_asc">Najstariji prvo</mat-option>
+                <mat-option value="name_asc">Naziv A-Z</mat-option>
+                <mat-option value="name_desc">Naziv Z-A</mat-option>
+                <mat-option value="price_asc">Cena rastuće</mat-option>
+                <mat-option value="price_desc">Cena opadajuće</mat-option>
+                <mat-option value="rating_desc">Najbolje ocenjeni</mat-option>
+                <mat-option value="rating_asc">Najslabije ocenjeni</mat-option>
+            </mat-select>
         </mat-form-field>
 
         <mat-divider class="divider"></mat-divider>
@@ -77,25 +94,49 @@
                     </li>
                     }
                 </ul>
-                @if(targetGroupFilter.items.length>5){
-                    <button matButton type="button" (click)="toggleShowAll(targetGroupFilter)">
-                        {{targetGroupFilter.showAll ? 'Prikažite manje' : 'Prikažite više' }}
-                    </button>
-                }
 
             </mat-expansion-panel>
 
             <mat-divider class="divider"></mat-divider>
 
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Ocena</mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <ul class="type-list">
+                    @for (rating of [4, 3, 2, 1]; track rating) {
+                    <li>
+                        <mat-checkbox
+                        [checked]="selectedMinRating === rating"
+                        (change)="selectedMinRating = $event.checked ? rating : 0; filter()">
+                        {{ rating }}+ zvezdice
+                        </mat-checkbox>
+                    </li>
+                    }
+                </ul>
+            </mat-expansion-panel>
+
+            <mat-divider class="divider"></mat-divider>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Cena</mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <p>Od {{ selectedMinPrice | number}} do {{ selectedMaxPrice | number}} RSD</p>
+
+                <mat-slider [min]="minPrice" [max]="maxPrice" step="100">
+                    <input matSliderStartThumb [(ngModel)]="selectedMinPrice" (ngModelChange)="filter()">
+                    <input matSliderEndThumb [(ngModel)]="selectedMaxPrice" (ngModelChange)="filter()">
+                </mat-slider>
+            </mat-expansion-panel>
+
+             <mat-divider class="divider"></mat-divider>
+
 
         </mat-accordion>
-
-        
-
-        
-
-
-
+        </div>
     </mat-drawer>
 
     <mat-drawer-content>
@@ -111,21 +152,20 @@
                     <mat-card-title>
                         <strong>{{t.name}}</strong>
                     </mat-card-title>
-                    <mat-card-subtitle>{{t.price}} RSD</mat-card-subtitle>
+                    <mat-card-subtitle>{{t.price | number}} RSD</mat-card-subtitle>
                 </mat-card-header>
+                <div class="toy-rating">
+                    <mat-icon fontIcon="star"></mat-icon>
+                    {{ authService.getAvgRatingForToy(t.toyId).toFixed(1) }}
+                </div>
 
             </mat-card-content>
-            <mat-card-actions>
-                <a [routerLink]="`/details/${t.permalink}`" matButton>
-                    <mat-icon fontIcon="description" />Details
-                </a>
-            </mat-card-actions>
         </mat-card>
         }
         }@else {
         <mat-card class="empty-card">
             <mat-card-content>
-                <h3>Nema traženih igračaka</h3>
+                Nema traženih igračaka
             </mat-card-content>
 
         </mat-card>

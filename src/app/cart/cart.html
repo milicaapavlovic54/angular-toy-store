@@ -1,1 +1,78 @@
-<p>cart works!</p>
+@if(getReservations().length > 0) {
+<mat-card class="mb-10">
+    <mat-card-header>
+        <h1>Sadržaj korpe</h1>
+    </mat-card-header>
+    <mat-card-content>
+        <table mat-table [dataSource]="reservations" class="mat-elevation-z8">
+            <ng-container matColumnDef="slika">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let reservation">
+                    <img [src]="utils.getImageUrl(reservation)" class="cart-img">
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="proizvod">
+                <th mat-header-cell *matHeaderCellDef>Proizvod</th>
+                <td mat-cell *matCellDef="let reservation">{{reservation.name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="opis">
+                <th mat-header-cell *matHeaderCellDef>Opis</th>
+                <td mat-cell *matCellDef="let reservation">{{reservation.description}}</td>
+            </ng-container>
+            <ng-container matColumnDef="tip">
+                <th mat-header-cell *matHeaderCellDef>Tip</th>
+                <td mat-cell *matCellDef="let reservation">{{reservation.type.name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="uzrast">
+                <th mat-header-cell *matHeaderCellDef>Uzrast</th>
+                <td mat-cell *matCellDef="let reservation">{{reservation.ageGroup.name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="cena">
+                <th mat-header-cell *matHeaderCellDef>Cena</th>
+                <td mat-cell *matCellDef="let reservation">{{reservation.price}}</td>
+            </ng-container>
+            <ng-container matColumnDef="količina">
+                <th mat-header-cell *matHeaderCellDef>Količina</th>
+                <td mat-cell *matCellDef="let reservation">
+                    <button matButton="outlined" (click)="decreaseCount(reservation)">
+                        <mat-icon class="count-icon">remove</mat-icon>
+                    </button>
+                    {{reservation.count}}
+                    <button matButton="outlined" (click)="increaseCount(reservation)">
+                        <mat-icon class="count-icon">add</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="ukupno">
+                <th mat-header-cell *matHeaderCellDef>Ukupno</th>
+                <td mat-cell *matCellDef="let reservation">{{calculateTotalByItem(reservation)}}</td>
+            </ng-container>
+            <ng-container matColumnDef="opcije">
+                <th mat-header-cell *matHeaderCellDef>Opcije</th>
+                <td mat-cell *matCellDef="let reservation">
+                    <a [routerLink]="`/details/${reservation.permalink}`" matButton>
+                        <mat-icon fontIcon="description" /> Detalji
+                    </a>
+                    <button type="button" matButton (click)="removeReservation(reservation)">
+                        <mat-icon fontIcon="cancel" /> Ukloni
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <h3>Ukupno: {{calculateTotal()}} RSD</h3>
+    </mat-card-content>
+    <mat-card-actions>
+        <button type="button" matButton="elevated" (click)="payAll()">
+            <mat-icon fontIcon="payments" /> Poručite
+        </button>
+    </mat-card-actions>
+</mat-card>
+}@else {
+    <mat-card class="empty-card">
+            <mat-card-content>
+                Korpa je prazna
+            </mat-card-content>
+    </mat-card>
+}

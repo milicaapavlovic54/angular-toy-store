@@ -1,3 +1,6 @@
+import { ReservationModel } from "./reservation.model"
+import { ReviewModel } from "./review.model"
+
 export interface UserModel{
     firstName: string
     lastName: string
@@ -6,5 +9,6 @@ export interface UserModel{
     favToyType: string
     address: string
     phone: string
-    orders: any[] // todo ovo treba orderModel kad se napravi
+    reservations: ReservationModel[]
+    reviews: ReviewModel[] 
 }
