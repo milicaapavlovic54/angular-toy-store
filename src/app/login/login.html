@@ -13,7 +13,7 @@
                 <input matInput type="password" [(ngModel)]="password">
             </mat-form-field>
             <mat-card-actions>
-                <button type="button" matButton class="full-width" (click)="doLogin()">
+                <button type="button" matButton (click)="doLogin()">
                     <mat-icon fontIcon="login" /> Submit
                 </button>
                 <a routerLink="/signup" matButton>

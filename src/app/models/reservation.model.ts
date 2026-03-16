@@ -9,6 +9,7 @@ export interface ReservationModel{
     targetGroup: 'dečak' | 'devojčica' | 'svi'
     price: number
     imageUrl: string
+    productionDate:string
     ageGroup: ToyAgeGroupModel
     type: ToyTypeModel
     state: 'r' | 'p' | 'c'

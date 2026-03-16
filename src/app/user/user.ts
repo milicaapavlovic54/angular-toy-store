@@ -15,10 +15,8 @@ import { UserModel } from '../models/user.model';
 import { ToyService } from '../services/toy.service';
 import { ToyTypeModel } from '../models/toyType.model';
 import { ReservationModel } from '../models/reservation.model';
-import { MatTableModule } from '@angular/material/table';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatDialog } from '@angular/material/dialog';
-import { ReviewDialog } from '../review-dialog/review-dialog';
+
+
 
 @Component({
   selector: 'app-user',
@@ -30,8 +28,7 @@ import { ReviewDialog } from '../review-dialog/review-dialog';
     FormsModule,
     MatSelectModule,
     MatListModule,
-    RouterLink,
-    MatTableModule
+    RouterLink
   ],
   templateUrl: './user.html',
   styleUrl: './user.css',
@@ -46,9 +43,8 @@ export class User {
 
   clientWidth: number = document.documentElement.clientWidth;
   displayedPaidColumns: string[] = [];
-  paidReservations: ReservationModel[] = [];
 
-  constructor(private router: Router, public utils: Utils, private dialog: MatDialog) {
+  constructor(private router: Router, public utils: Utils ) {
     if (!AuthService.getActiveUser()) {
       router.navigate(['/login'])
     }
@@ -56,51 +52,9 @@ export class User {
     ToyService.getToyTypes()
       .then(rsp => this.toyTypes.set(rsp.data.map(t => t.name)))
 
-    this.resizeTable();
-    this.loadPaidReservations();
 
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event): void {
-    this.clientWidth = (event.target as Window).document.documentElement.clientWidth
-    this.resizeTable()
-  }
-
-  resizeTable() {
-    if (this.clientWidth >= 1010) {
-      this.displayedPaidColumns = ['slika', 'proizvod', 'opis', 'tip', 'uzrast', 'cena', 'količina', 'ukupno', 'opcije']
-      return;
-    }
-
-    if (this.clientWidth >= 840) {
-      this.displayedPaidColumns = ['slika', 'proizvod', 'opis', 'cena', 'količina', 'ukupno', 'opcije']
-      return;
-    }
-
-    if (this.clientWidth >= 580) {
-      this.displayedPaidColumns = ['proizvod', 'cena', 'količina', 'ukupno', 'opcije']
-      return;
-    }
-
-    this.displayedPaidColumns = ['proizvod', 'ukupno', 'opcije']
-  }
-
-  loadPaidReservations() {
-    this.paidReservations = AuthService.getReservationsByState('p')
-  }
-
-  calculateTotalByItem(reservation: ReservationModel) {
-    return this.utils.calculateTotal(reservation);
-  }
-
-  calculatePaidTotal() {
-    let total = 0;
-    for (let reservation of this.paidReservations) {
-      total += this.calculateTotalByItem(reservation)
-    }
-    return total;
-  }
 
   updateUser() {
     Alerts.confirm('Da li ste sigurni da želite da izmenite korisničke podatke?', () => {
@@ -150,35 +104,7 @@ export class User {
       })
   }
 
-  hasReview(toyId: number) {
-    return AuthService.getMyReviewForToy(toyId) !== null
-  }
-
-  reviewToy(reservation: ReservationModel) {
-    const existingReview = AuthService.getMyReviewForToy(reservation.toyId)
-
-    const dialogRef = this.dialog.open(ReviewDialog, {
-      width: '450px',
-      data: {
-        imageUrl: this.utils.getImageUrl(reservation),
-        toyName: reservation.name,
-        rating: existingReview?.rating ?? 0,
-        comment: existingReview?.comment ?? ''
-      }
-  })
-
-  dialogRef.afterClosed().subscribe(result => {
-    if (!result) return;
-
-    AuthService.addOrUpdateReview(
-      reservation.toyId,
-      result.rating,
-      result.comment
-    )
-
-    this.reloadComponent();
-  })
-}
+  
 }
 
 

@@ -97,6 +97,7 @@ export class AuthService {
                     reservation.toyId = toy.toyId
                     reservation.permalink = toy.permalink
                     reservation.description = toy.description
+                    reservation.productionDate = toy.productionDate
                     reservation.imageUrl = toy.imageUrl
                     reservation.ageGroup = toy.ageGroup
                     reservation.type = toy.type
@@ -138,12 +139,23 @@ export class AuthService {
         return []
     }
 
+    static getAllReservations() {
+        const users = this.getUsers()
+        for (let u of users) {
+            if (u.email === localStorage.getItem(ACTIVE)) {
+                return u.reservations
+            }
+        }
+
+        return []
+    }
+
     static cancelReservation(createdAt: string) {
         const users = this.getUsers()
         for (let u of users) {
             if (u.email === localStorage.getItem(ACTIVE)) {
                 for (let r of u.reservations) {
-                    if (r.state == 'r' && r.createdAt == createdAt) {
+                    if ( r.createdAt == createdAt) {
                         r.state = 'c'
                     }
                 }

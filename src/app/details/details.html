@@ -37,6 +37,11 @@
                     <div matListItemLine>{{toy()?.type?.description}}</div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
+                <mat-list-item>
+                    <mat-icon matListItemIcon>calendar_today</mat-icon>
+                    <div matListItemTitle>Datum proizvodnje: {{toy()?.productionDate | date:'dd.MM.yyyy.' }}</div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
             </mat-list>
 
             <mat-card-subtitle class="detail-price">

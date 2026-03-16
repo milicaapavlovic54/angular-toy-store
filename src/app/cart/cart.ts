@@ -8,6 +8,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { DatePipe } from '@angular/common';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { ReviewDialog } from '../review-dialog/review-dialog';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-cart',
@@ -16,7 +21,10 @@ import { MatIconModule } from '@angular/material/icon';
     MatTableModule,
     MatButtonModule,
     MatIconModule,
-    RouterLink
+    RouterLink,
+    DatePipe,
+    MatDialogModule,
+    MatDividerModule
   ],
   templateUrl: './cart.html',
   styleUrl: './cart.css',
@@ -24,11 +32,13 @@ import { MatIconModule } from '@angular/material/icon';
 export class Cart {
   clientWidth: number = document.documentElement.clientWidth
   displayedColumns: string[] = []
-  reservations: ReservationModel[] = [];
+  reservedReservations: ReservationModel[] = [];
+  paidReservations: ReservationModel[] = [];
+  canceledReservations: ReservationModel[] = [];
 
 
 
-  constructor(public router: Router, public utils: Utils) {
+  constructor(public router: Router, public utils: Utils, private dialog: MatDialog) {
     if (!AuthService.getActiveUser()) {
       router.navigate(['/login'])
       return
@@ -46,7 +56,7 @@ export class Cart {
 
   resizeTable() {
     if (this.clientWidth >= 1010) {
-      this.displayedColumns = ['slika', 'proizvod', 'opis', 'tip', 'uzrast', 'cena', 'količina', 'ukupno', 'opcije']
+      this.displayedColumns = ['slika', 'proizvod', 'opis', 'tip', 'uzrast', 'pol','datum_proizvodnje', 'cena', 'količina', 'ukupno','status' , 'opcije']
       return
     }
 
@@ -73,7 +83,9 @@ export class Cart {
   }
 
   loadReservations() {
-    this.reservations = AuthService.getReservationsByState('r');
+    this.reservedReservations = this.getReservedReservations();
+    this.paidReservations = this.getPaidReservations ();
+    this.canceledReservations = this.getCanceledReservations();
   }
 
   increaseCount(reservation: ReservationModel) {
@@ -98,8 +110,8 @@ export class Cart {
     })
   }
 
-  payAll() {
-    Alerts.confirm(`Da li ste sigurni da želite da platite? Ukupan iznos za uplatu je ${this.calculateTotal()} RSD!`, () => {
+  payItem(reservation:ReservationModel) {
+    Alerts.confirm(`Da li ste sigurni da želite da izvršite uplatu? Ukupan iznos za uplatu je ${this.calculateTotalByItem(reservation)} RSD!`, () => {
       AuthService.payReservation()
       this.reloadComponent()
     })
@@ -109,16 +121,17 @@ export class Cart {
     return this.utils.calculateTotal(reservation)
   }
 
-  calculateTotal() {
-    let total = 0
-    for (let reservation of this.getReservations()) {
-      total += this.utils.calculateTotal(reservation)
-    }
 
-    return total
+  getStatusName(reservation:ReservationModel){
+    if(reservation.state === 'r') return 'Rezervisano'
+    if(reservation.state === 'p') return 'Pristiglo'
+    return 'Otkazano'
+  }
+  getAllReservations(){
+    return AuthService.getAllReservations()
   }
 
-  getReservations() {
+  getReservedReservations() {
     return AuthService.getReservationsByState('r')
   }
 
@@ -129,4 +142,34 @@ export class Cart {
   getCanceledReservations() {
     return AuthService.getReservationsByState('c')
   }
+
+  hasReview(toyId: number) {
+    return AuthService.getMyReviewForToy(toyId) !== null
+  }
+
+  reviewToy(reservation: ReservationModel) {
+    const existingReview = AuthService.getMyReviewForToy(reservation.toyId)
+
+    const dialogRef = this.dialog.open(ReviewDialog, {
+      width: '450px',
+      data: {
+        imageUrl: this.utils.getImageUrl(reservation),
+        toyName: reservation.name,
+        rating: existingReview?.rating ?? 0,
+        comment: existingReview?.comment ?? ''
+      }
+  })
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (!result) return;
+
+    AuthService.addOrUpdateReview(
+      reservation.toyId,
+      result.rating,
+      result.comment
+    )
+
+    this.reloadComponent();
+  })
+}
 }

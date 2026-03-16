@@ -18,6 +18,7 @@ import { AuthService } from '../services/auth.service';
 import { MatSliderModule } from '@angular/material/slider';
 import { DecimalPipe } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 export interface FilterOption {
@@ -46,7 +47,8 @@ export interface FilterGroup {
     MatExpansionModule,
     MatSliderModule,
     DecimalPipe,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './home.html',
   styleUrl: './home.css',

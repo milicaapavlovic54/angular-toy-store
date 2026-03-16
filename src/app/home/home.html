@@ -29,7 +29,7 @@
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        Tipovi igračaka
+                        Tip
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <ul class="type-list">
@@ -141,7 +141,7 @@
 
     <mat-drawer-content>
         @if (filteredToys().length>0) {
-
+            
         @for(t of filteredToys(); track $index){
 
         <mat-card [routerLink]="`/details/${t.permalink}`" class="toy-card" appearance="outlined">
@@ -163,12 +163,7 @@
         </mat-card>
         }
         }@else {
-        <mat-card class="empty-card">
-            <mat-card-content>
-                Nema traženih igračaka
-            </mat-card-content>
-
-        </mat-card>
+        <mat-spinner></mat-spinner>
         }
     </mat-drawer-content>
 
