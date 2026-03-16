@@ -112,7 +112,7 @@ export class Cart {
 
   payItem(reservation:ReservationModel) {
     Alerts.confirm(`Da li ste sigurni da želite da izvršite uplatu? Ukupan iznos za uplatu je ${this.calculateTotalByItem(reservation)} RSD!`, () => {
-      AuthService.payReservation()
+      AuthService.payReservation(reservation.createdAt)
       this.reloadComponent()
     })
   }

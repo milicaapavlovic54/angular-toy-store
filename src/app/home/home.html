@@ -98,23 +98,28 @@
             </mat-expansion-panel>
 
             <mat-divider class="divider"></mat-divider>
-
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
-                    <mat-panel-title>Ocena</mat-panel-title>
+                    <mat-panel-title>
+                        Ocena
+                    </mat-panel-title>
                 </mat-expansion-panel-header>
-
                 <ul class="type-list">
-                    @for (rating of [4, 3, 2, 1]; track rating) {
+                    @for (rg of getVisibleItems(ratingGroupFilter); track rg.id) {
                     <li>
-                        <mat-checkbox
-                        [checked]="selectedMinRating === rating"
-                        (change)="selectedMinRating = $event.checked ? rating : 0; filter()">
-                        {{ rating }}+ zvezdice
+                        <mat-checkbox [checked]="isSelected(ratingGroupFilter, rg.id)"
+                            (change)="onChange(ratingGroupFilter, rg.id, $event.checked)" >
+                            {{ rg.name }}
                         </mat-checkbox>
                     </li>
                     }
                 </ul>
+                @if(ratingGroupFilter.items.length>5){
+                    <button matButton type="button" (click)="toggleShowAll(ratingGroupFilter)">
+                        {{ratingGroupFilter.showAll ? 'Prikažite manje' : 'Prikažite više' }}
+                    </button>
+                }
+
             </mat-expansion-panel>
 
             <mat-divider class="divider"></mat-divider>

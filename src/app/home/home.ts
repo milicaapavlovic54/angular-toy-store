@@ -18,7 +18,7 @@ import { AuthService } from '../services/auth.service';
 import { MatSliderModule } from '@angular/material/slider';
 import { DecimalPipe } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 export interface FilterOption {
@@ -61,7 +61,7 @@ export class Home {
   toyTypes = signal<ToyTypeModel[]>([])
   toyAgeGroups = signal<ToyAgeGroupModel[]>([])
   public authService = AuthService
-  selectedMinRating = 0
+  selectedRatings: number[] = []
 
   minPrice = 0
   maxPrice = 0
@@ -90,19 +90,32 @@ export class Home {
     selectedIds: [],
     showAll: false
   }
+  ratingGroupFilter: FilterGroup = {
+    items: [
+      { id: 5, name: '5 zvezdica' },
+      { id: 4, name: '4 zvezdice' },
+      { id: 3, name: '3 zvezdice' },
+      { id: 2, name: '2 zvezdice' },
+      { id: 1, name: '1 zvezdica' },
+      { id: 0, name: 'Bez ocene' }
+    ],
+    selectedIds: [],
+    showAll: false
+  }
 
 
   constructor(public utils: Utils, public router: Router) {
     ToyService.getToys()
       .then(rsp => {
         this.toys.set(rsp.data)
-        this.filteredToys.set(rsp.data)
 
         const prices = rsp.data.map(t => t.price)
         this.maxPrice = Math.max(...prices)
         this.minPrice = Math.min(...prices)
         this.selectedMaxPrice = this.maxPrice
         this.selectedMinPrice = this.minPrice
+
+        this.filter()
       })
 
     ToyService.getToyTypes()
@@ -172,17 +185,16 @@ export class Home {
         return this.targetGroupFilter.selectedIds.includes(t.targetGroup);
       })
       .filter(t => {
-        if (this.selectedMinRating === 0) return true
-        return this.authService.getAvgRatingForToy(t.toyId) >= this.selectedMinRating
+        if (this.ratingGroupFilter.selectedIds.length === 0) return true;
+        const avgRating = this.authService.getAvgRatingForToy(t.toyId)
+        const rating = avgRating === 0 ? 0 : Math.floor(avgRating)
+        return this.ratingGroupFilter.selectedIds.includes(rating);
       })
-      .filter(t=>{
-        return t.price>=this.selectedMinPrice && t.price<=this.selectedMaxPrice
+      .filter(t => {
+        return t.price >= this.selectedMinPrice && t.price <= this.selectedMaxPrice
       })
 
-
-    this.filteredToys.set(filtered)
-
-    filtered = filtered.sort((a, b) => {
+    filtered = [...filtered].sort((a, b) => {
       switch (this.sortBy) {
         case 'date_asc':
           return new Date(a.productionDate).getTime() - new Date(b.productionDate).getTime()

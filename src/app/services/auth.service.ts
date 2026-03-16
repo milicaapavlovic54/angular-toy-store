@@ -165,13 +165,13 @@ export class AuthService {
         localStorage.setItem(USERS, JSON.stringify(users))
     }
 
-    static payReservation() {
+    static payReservation(createdAt: string) {
         const users = this.getUsers()
         for (let u of users) {
             if (u.email === localStorage.getItem(ACTIVE)) {
-                for (let o of u.reservations) {
-                    if (o.state == 'r') {
-                        o.state = 'p'
+                for (let r of u.reservations) {
+                    if (r.state === 'r' && r.createdAt===createdAt) {
+                        r.state = 'p'
                     }
                 }
             }
