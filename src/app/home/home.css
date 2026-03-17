@@ -19,9 +19,7 @@ mat-drawer-container {
     gap: 5px;
 }
 
-.card-content {
-    margin-top: 10px;
-}
+
 
 .empty-card {
   padding: 24px;
@@ -64,10 +62,28 @@ mat-drawer-container {
   background: transparent;
 }
 .toy-rating {
+  width: 80px;
+  padding-left: 16px;
   display: flex;
   align-items: center;
   gap: 4px;
   margin-top: 8px;
   color: goldenrod;
   font-weight: 500;
+
 }
+
+.toy-price {
+  width: 120px;
+  padding-left: 16px;
+  font-size: x-large;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 15px;
+  font-weight: 900;
+  margin-right: auto;
+}
+
+
+

@@ -23,8 +23,8 @@
                     <input matInput type="text" [(ngModel)]="activeUser!.phone">
                 </mat-form-field>
                 <mat-form-field class="full-width">
-                    <mat-label>Omiljeni tip igračke</mat-label>
-                    <mat-select [(ngModel)]="activeUser!.favToyType">
+                    <mat-label>Omiljeni tipovi igračaka</mat-label>
+                    <mat-select [(ngModel)]="activeUser!.favToyType" multiple>
                         @for (type of toyTypes(); track $index) {
                         <mat-option [value]="type">{{type}}</mat-option>
                         }

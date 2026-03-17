@@ -22,7 +22,7 @@
             </mat-form-field>
             <mat-form-field class="full-width">
                 <mat-label>Omiljeni tip igračke</mat-label>
-                <mat-select [(ngModel)]="user.favToyType">
+                <mat-select [(ngModel)]="user.favToyType" multiple>
                     @for (ftt of toyTypes(); track ftt) {
                     <mat-option [value]="ftt">{{ftt}}</mat-option>
                     }

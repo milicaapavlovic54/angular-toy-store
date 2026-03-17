@@ -14,7 +14,7 @@ export class AuthService {
             lastName: 'Example',
             email: 'user@example.com',
             password: 'user123',
-            favToyType: 'Slagalica',
+            favToyType: [],
             address: 'Danijelova 32',
             phone: '0644569276',
             reservations: [],

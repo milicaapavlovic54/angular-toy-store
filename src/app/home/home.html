@@ -157,12 +157,18 @@
                     <mat-card-title>
                         <strong>{{t.name}}</strong>
                     </mat-card-title>
-                    <mat-card-subtitle>{{t.price | number}} RSD</mat-card-subtitle>
+                    <mat-card-subtitle>{{t.description}}</mat-card-subtitle>
                 </mat-card-header>
-                <div class="toy-rating">
-                    <mat-icon fontIcon="star"></mat-icon>
-                    {{ authService.getAvgRatingForToy(t.toyId).toFixed(1) }}
+                <div>
+                    <div class="toy-price">
+                        <strong>{{t.price | number}} RSD</strong>
+                    </div>
+                    <div class="toy-rating">
+                        <mat-icon fontIcon="star"></mat-icon>
+                        {{ authService.getAvgRatingForToy(t.toyId).toFixed(1) }}
+                    </div>
                 </div>
+                
 
             </mat-card-content>
         </mat-card>

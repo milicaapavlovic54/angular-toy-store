@@ -34,7 +34,7 @@ export class Signup {
     phone: '',
     address: '',
     password: '',
-    favToyType: ''
+    favToyType: []
   }
 
   repeat: string = ''
@@ -51,7 +51,7 @@ export class Signup {
       return
     }
 
-    if (this.user.email == '' || this.user.firstName == '' || this.user.lastName == '' || this.user.address == '' || this.user.favToyType == '' || this.user.phone == '') {
+    if (this.user.email == '' || this.user.firstName == '' || this.user.lastName == '' || this.user.address == '' || this.user.favToyType?.length === 0 || this.user.phone == '') {
       Alerts.error('Sva polja moraju biti popunjena')
       return
     }

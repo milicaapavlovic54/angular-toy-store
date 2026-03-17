@@ -6,7 +6,7 @@ export interface UserModel{
     lastName: string
     email: string
     password: string
-    favToyType: string
+    favToyType: string[]
     address: string
     phone: string
     reservations: ReservationModel[]
