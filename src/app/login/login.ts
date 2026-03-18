@@ -40,7 +40,7 @@ export class Login {
     }
     
 
-    Alerts.error('Invalid email or password!')
+    Alerts.error('Pogrešan email ili lozinka!')
     
   }
 }

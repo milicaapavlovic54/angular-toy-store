@@ -9,15 +9,15 @@
                 <input matInput type="email" [(ngModel)]="email">
             </mat-form-field>
             <mat-form-field class="full-width">
-                <mat-label>Password</mat-label>
+                <mat-label>Lozinka</mat-label>
                 <input matInput type="password" [(ngModel)]="password">
             </mat-form-field>
             <mat-card-actions>
                 <button type="button" matButton (click)="doLogin()">
-                    <mat-icon fontIcon="login" /> Submit
+                    <mat-icon fontIcon="login" /> Prijavi se
                 </button>
                 <a routerLink="/signup" matButton>
-                    <mat-icon fontIcon="send" /> Signup Instead
+                    <mat-icon fontIcon="send" /> Nemate nalog? Registrujte se
                 </a>
             </mat-card-actions>
         </div>
